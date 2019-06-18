@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { increment, decrement } from '../actions';
+import { addTodo } from '../actions';
 
 class TodoList extends Component {
     // incrementIfOdd = () => {
@@ -10,12 +10,35 @@ class TodoList extends Component {
     //         this.props.increment()
     //     }
     // };
-    render() {
+    state = {
+        newTodo: '',
+    }
 
+    handleChange = e => {
+        this.setState({newTodo: e.target.value})
+    }
+
+    addTodo = e => {
+        e.preventDefault();
+        this.props.addTodo(this.state.newTodo);
+        this.setState({ newTodo: ''})
+    }
+    render() {
         return (
-            <p>
-                {this.props.todoList}
+            <div>
+                {this.props.todos.map( todo => {
+                    return (
+                        // <p>{todo.value}</p>
+                        <p>{todo.value}</p>
+                )})}
                 <input
+                    type="text"
+                    value={this.state.newTodo}
+                    placeholder="More things todo..."
+                    onChange={this.handleChange}/>
+                <button onClick={() => {this.addTodo() }}>Add</button>
+
+                {/* <input
                     placeholder="More things todo..."></input>
                 <button></button>
                 <button onClick={() => {this.props.increment() }}>
@@ -26,13 +49,13 @@ class TodoList extends Component {
                 </button>
                  {/* Uncomment these button tags if you got
                 around to implementing the extra credit functions */}
-                <button onClick={this.incrementIfOdd}>
+                {/* <button onClick={this.incrementIfOdd}>
                     Increment if odd
                 </button>
                 <button onClick={this.incrementAsync}>
                     Increment async
-                </button> 
-            </p>
+                </button>  */}
+            </div>
         );
     }
 }
@@ -44,9 +67,9 @@ class TodoList extends Component {
 // redux application, though, it would receive only the relevant
 // parts it needs from the state object.
 const mapStateToProps = (state) => {
+    // console.log(state)
     return {
-        count: state.count,
-        // example: state.example,
+        todos: state.todos
     };
 };
 
@@ -55,4 +78,4 @@ const mapStateToProps = (state) => {
 // is only a dumb React component. We pass in all of the functions that
 // are reliant on Redux, along with the component itself, so that Redux
 // makes itself known to this component.
-export default connect(mapStateToProps, { increment, decrement })(Counter);
+export default connect(mapStateToProps, { addTodo })(TodoList);
