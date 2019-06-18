@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { addTodo } from '../actions';
+import { addTodo , toggleClick } from '../actions';
 
 class TodoList extends Component {
     // incrementIfOdd = () => {
@@ -23,13 +23,22 @@ class TodoList extends Component {
         this.props.addTodo(this.state.newTodo);
         this.setState({ newTodo: ''})
     }
+
+    toggleClick = (e, index) => {
+        e.preventDefault();
+        // console.log(index)
+        this.props.toggleClick(index)
+    }
+
     render() {
         return (
             <div>
-                {this.props.todos.map( todo => {
+                {this.props.todos.map( (todo, index) => {
                     return (
-                        // <p>{todo.value}</p>
-                        <p>{todo.value}</p>
+                        <h4 
+                            className={todo.completed ? "color" : null}
+                            onClick={e => this.toggleClick(e, index)} key={index}>
+                            {todo.value}</h4>
                 )})}
                 <input
                     type="text"
@@ -50,4 +59,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { addTodo })(TodoList);
+export default connect(mapStateToProps, { addTodo, toggleClick})(TodoList);

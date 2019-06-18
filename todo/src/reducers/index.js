@@ -1,4 +1,4 @@
-import { ADD_TODO } from '../actions';
+import { ADD_TODO , TOGGLE_CLICK} from '../actions';
 
 const initialState = {
   todos: [
@@ -17,7 +17,22 @@ export const todosReducer = (state = initialState, action) => {
         ...state,
         todos: [...state.todos, todos]
       }
+
+    case TOGGLE_CLICK:
+        return { 
+            ...state,
+            todos: state.todos.map((todos, index) => {
+                if (action.payload === index) {
+                return {
+                    ...todos,
+                    completed: !todos.completed
+                };
+                }   else {
+                return todos;
+                }
+            }
+            )};
     default:
-      return state;
-  }
+        return state;
+}
 };

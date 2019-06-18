@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.color {
+  /* color: red; */
+  text-decoration: line-through rgb(28, 175, 28);
+}

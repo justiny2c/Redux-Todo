@@ -7,3 +7,12 @@ export const addTodo = todo => {
         payload: todo
     }
 }
+
+export const TOGGLE_CLICK = "TOGGLE_CLICK"
+
+export const toggleClick = index => {
+    return {
+        type: TOGGLE_CLICK,
+        payload: index
+    }
+}
